@@ -51,7 +51,7 @@ class ShoppingMall {
     } catch (e) {
       print('발생한 예외는? $e');
     }
-  } // 상품을 장바구니에 담는 메서드
+  } // 상품을 장바구니에 담는 메서드.
 
   void showTotal() {
     if (cart.isEmpty) {
@@ -101,7 +101,7 @@ void main() {
     } else if (input == "6") {
       shoppingMall.clearCart();
     } else {
-      print("지원하지 않는 기능입니다! 다시 시도해주세요..");
+      print("지원하지 않는 기능입니다! 다시 시도해주세요.");
     }
   } while (input != "4");
 }
