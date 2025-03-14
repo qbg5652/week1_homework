@@ -1,27 +1,18 @@
 import 'dart:io';
 
-class Product {
-  final String name;
-  final int price;
-
-  Product({required this.name, required this.price});
-}
-
 class ShoppingMall {
-  final List<Product> products = [
-    Product(name: '셔츠', price: 45000),
-    Product(name: '원피스', price: 30000),
-    Product(name: '반팔티', price: 35000),
-    Product(name: '반바지', price: 38000),
-    Product(name: '양말', price: 5000),
+  List<Map<String, int>> Product = [
+    {'셔츠': 45000, '원피스': 30000, '반팔티': 35000, '반바지': 38000, '양말': 5000},
   ];
   Map<String, int> cart = {}; //장바구니
   List<String> cartList = [];
 
   // 판매하는 상품목록 List<Product>
   void showProducts() {
-    for (var product in products) {
-      print('${product.name} / ${product.price}원');
+    for (int i = 0; i < Product.length; i++) {
+      Product[i].forEach((key, value) {
+        print('$key / $value원');
+      });
     }
   } // 상품 목록을 출력하는 메서드
 
@@ -36,13 +27,8 @@ class ShoppingMall {
         return;
       }
 
-      // 상품이 존재하는지 확인
-      final product = products.firstWhere(
-        (p) => p.name == productName,
-        orElse: () => Product(name: '', price: 0),
-      );
-
-      if (product.name.isEmpty) {
+      // key 값에 해당 상품이 존재하는지 확인.
+      if (!Product[0].containsKey(productName)) {
         print("입력값이 올바르지 않아요!");
         return;
       }
@@ -65,7 +51,7 @@ class ShoppingMall {
     } catch (e) {
       print('발생한 예외는? $e');
     }
-  } // 상품을 장바구니에 담는 메서드
+  } // 상품을 장바구니에 담는 메서드.
 
   void showTotal() {
     if (cart.isEmpty) {
@@ -75,11 +61,8 @@ class ShoppingMall {
     String list = cartList.join(', ');
     int total = 0;
     cart.forEach((key, value) {
-      final product = products.firstWhere(
-        (p) => p.name == key,
-        orElse: () => Product(name: '', price: 0),
-      );
-      total += product.price * value;
+      int price = Product[0][key] ?? 0;
+      total += price * value;
       // print('상품명 : $key, 상품 가격 : $price원, 장바구니 개수 : $value개'); 확인용.
     });
     print('\n장바구니에 ' + list + '가 담겨있네요. 총 $total원 입니다!');
@@ -118,7 +101,7 @@ void main() {
     } else if (input == "6") {
       shoppingMall.clearCart();
     } else {
-      print("지원하지 않는 기능입니다! 다시 시도해주세요..");
+      print("지원하지 않는 기능입니다! 다시 시도해주세요.");
     }
   } while (input != "4");
 }
